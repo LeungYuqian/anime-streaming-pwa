@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ly最新資訊 - 即時新聞與重要情報</title>
+    <meta name="description" content="ly最新資訊提供即時新聞更新、多語言支持和智能搜索功能">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2563eb">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="./icon-96x96.svg">
+    <link rel="apple-touch-icon" sizes="192x192" href="./icon-192x192.svg">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <div>載入中...</div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <h1>ly最新資訊</h1>
+                </div>
+                
+                <div class="nav-menu" id="nav-menu">
+                    <span class="nav-link active" data-section="home">
+                        <i class="fas fa-home"></i> 首頁
+                    </span>
+                    <span class="nav-link" data-section="categories">
+                        <i class="fas fa-list"></i> 分類
+                    </span>
+                    <span class="nav-link" data-section="anime">
+                        <i class="fas fa-tv"></i> 動漫
+                    </span>
+                    <span class="nav-link" data-section="search">
+                        <i class="fas fa-search"></i> 搜索
+                    </span>
+                    <span class="nav-link" data-section="contact">
+                        <i class="fas fa-envelope"></i> 聯繫
+                    </span>
+                    <span class="nav-link" data-section="about">
+                        <i class="fas fa-info-circle"></i> 關於
+                    </span>
+                </div>
+                
+                <div class="nav-controls">
+                    <!-- Mobile Menu Toggle -->
+                    <button class="nav-toggle" id="nav-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="container">
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="搜索新聞..." class="search-input">
+                        <button id="search-btn" class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button id="voice-search-btn" class="voice-btn" title="語音搜索">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- News Categories Filter -->
+                <div class="category-filter">
+                    <button class="filter-btn active" data-category="general">綜合</button>
+                    <button class="filter-btn" data-category="business">商業</button>
+                    <button class="filter-btn" data-category="technology">科技</button>
+                    <button class="filter-btn" data-category="entertainment">娛樂</button>
+                    <button class="filter-btn" data-category="health">健康</button>
+                    <button class="filter-btn" data-category="science">科學</button>
+                    <button class="filter-btn" data-category="sports">體育</button>
+                </div>
+
+                <!-- Breaking News Banner -->
+                <div id="breaking-news" class="breaking-news" style="display: none;">
+                    <div class="breaking-content">
+                        <span class="breaking-label">突發新聞</span>
+                        <span class="breaking-text"></span>
+                    </div>
+                </div>
+
+                <!-- News Grid -->
+                <div id="news-grid" class="news-grid">
+                    <!-- News articles will be loaded here -->
+                </div>
+
+                <!-- Load More Button -->
+                <div class="load-more-container">
+                    <button id="load-more-btn" class="load-more-btn" style="display: none;">
+                        載入更多新聞
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categories" class="section">
+            <div class="container">
+                <h2>新聞分類</h2>
+                <div class="categories-grid">
+                    <div class="category-card" data-category="general">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>綜合新聞</h3>
+                        <p>最新的綜合新聞報導</p>
+                    </div>
+                    <div class="category-card" data-category="business">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>商業財經</h3>
+                        <p>商業動態與財經資訊</p>
+                    </div>
+                    <div class="category-card" data-category="technology">
+                        <i class="fas fa-microchip"></i>
+                        <h3>科技創新</h3>
+                        <p>最新科技趨勢與創新</p>
+                    </div>
+                    <div class="category-card" data-category="entertainment">
+                        <i class="fas fa-film"></i>
+                        <h3>娛樂資訊</h3>
+                        <p>娛樂圈動態與影視資訊</p>
+                    </div>
+                    <div class="category-card" data-category="health">
+                        <i class="fas fa-heartbeat"></i>
+                        <h3>健康醫療</h3>
+                        <p>健康資訊與醫療新知</p>
+                    </div>
+                    <div class="category-card" data-category="science">
+                        <i class="fas fa-flask"></i>
+                        <h3>科學研究</h3>
+                        <p>科學發現與研究成果</p>
+                    </div>
+                    <div class="category-card" data-category="sports">
+                        <i class="fas fa-futbol"></i>
+                        <h3>體育運動</h3>
+                        <p>體育賽事與運動資訊</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Anime Section -->
+        <section id="anime" class="section">
+            <div class="container">
+                <h2>動漫庫</h2>
+                <div class="anime-search-container">
+                    <div class="search-box">
+                        <input type="text" id="anime-search-input" placeholder="搜索動漫..." class="search-input">
+                        <button id="anime-search-btn" class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Advanced Search Filters -->
+                    <div class="advanced-filters" id="advanced-filters">
+                        <div class="filter-row">
+                            <select id="genre-filter" class="filter-select">
+                                <option value="">所有類型</option>
+                                <option value="1">動作</option>
+                                <option value="2">冒險</option>
+                                <option value="4">喜劇</option>
+                                <option value="8">戲劇</option>
+                                <option value="10">奇幻</option>
+                                <option value="22">浪漫</option>
+                                <option value="24">科幻</option>
+                                <option value="27">懸疑</option>
+                            </select>
+                            
+                            <select id="year-filter" class="filter-select">
+                                <option value="">所有年份</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                            </select>
+                            
+                            <select id="status-filter" class="filter-select">
+                                <option value="">所有狀態</option>
+                                <option value="airing">播放中</option>
+                                <option value="complete">已完結</option>
+                                <option value="upcoming">即將播出</option>
+                            </select>
+                            
+                            <select id="type-filter" class="filter-select">
+                                <option value="">所有類型</option>
+                                <option value="tv">TV動畫</option>
+                                <option value="movie">劇場版</option>
+                                <option value="ova">OVA</option>
+                                <option value="special">特別篇</option>
+                            </select>
+                            
+                            <select id="rating-filter" class="filter-select">
+                                <option value="">所有評級</option>
+                                <option value="g">G - 全年齡</option>
+                                <option value="pg">PG - 建議家長指導</option>
+                                <option value="pg13">PG-13 - 13歲以上</option>
+                                <option value="r17">R - 17歲以上</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-actions">
+                            <button id="apply-filters-btn" class="apply-filters-btn">
+                                <i class="fas fa-filter"></i> 應用篩選
+                            </button>
+                            <button id="clear-filters-btn" class="clear-filters-btn">
+                                <i class="fas fa-times"></i> 清除篩選
+                            </button>
+                            <button id="toggle-filters-btn" class="toggle-filters-btn">
+                                <i class="fas fa-sliders-h"></i> 高級搜索
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anime Categories Filter -->
+                <div class="category-filter anime-filter">
+                    <button class="filter-btn active" data-anime-category="all">全部</button>
+                    <button class="filter-btn" data-anime-category="ongoing">連載中</button>
+                    <button class="filter-btn" data-anime-category="completed">已完結</button>
+                    <button class="filter-btn" data-anime-category="movie">劇場版</button>
+                    <button class="filter-btn" data-anime-category="popular">熱門</button>
+                </div>
+
+                <!-- Anime Grid -->
+                <div id="anime-grid" class="anime-grid">
+                    <!-- Anime cards will be loaded here -->
+                </div>
+
+                <!-- Load More Button -->
+                <div class="load-more-container">
+                    <button id="load-more-anime-btn" class="load-more-btn">
+                        載入更多動漫
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section id="search" class="section">
+            <div class="container">
+                <h2>搜索新聞</h2>
+                <div class="advanced-search">
+                    <div class="search-form">
+                        <input type="text" id="advanced-search-input" placeholder="輸入搜索關鍵字..." class="search-input">
+                        <select id="search-category" class="search-select">
+                            <option value="">所有分類</option>
+                            <option value="general">綜合</option>
+                            <option value="business">商業</option>
+                            <option value="technology">科技</option>
+                            <option value="entertainment">娛樂</option>
+                            <option value="health">健康</option>
+                            <option value="science">科學</option>
+                            <option value="sports">體育</option>
+                        </select>
+                        <select id="search-language" class="search-select">
+                            <option value="">所有語言</option>
+                            <option value="zh">中文</option>
+                            <option value="en">English</option>
+                            <option value="ja">日本語</option>
+                            <option value="ko">한국어</option>
+                        </select>
+                        <button id="advanced-search-btn" class="search-btn">
+                            <i class="fas fa-search"></i> 搜索
+                        </button>
+                    </div>
+                </div>
+                <div id="search-results" class="search-results">
+                    <!-- Search results will be displayed here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>聯繫我們</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>聯繫方式</h3>
+                        <div><i class="fas fa-envelope"></i> kack970209@gmail.com</div>
+                        <div><i class="fas fa-phone"></i> 目前不公開</div>
+                        <div><i class="fas fa-map-marker-alt"></i> 台北市信義區</div>
+                    </div>
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">電子郵件</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">主題</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">請選擇主題</option>
+                                <option value="feedback">意見反饋</option>
+                                <option value="bug">問題回報</option>
+                                <option value="suggestion">功能建議</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">內容</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> 發送訊息
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2>關於 ly最新資訊</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>我們的使命</h3>
+                        <p>ly最新資訊致力於為用戶提供即時、準確、多元化的新聞資訊服務。我們整合全球優質新聞來源，運用先進技術為您篩選最重要的資訊。</p>
+                        
+                        <h3>核心功能</h3>
+                        <ul>
+                            <li>即時新聞更新</li>
+                            <li>智能分類系統</li>
+                            <li>多語言支持</li>
+                            <li>語音搜索功能</li>
+                            <li>PWA 離線瀏覽</li>
+                            <li>社交分享功能</li>
+                        </ul>
+                        
+                        <h3>隱私政策</h3>
+                        <p>我們重視您的隱私權，嚴格遵守相關法律法規，保護用戶個人資訊安全。我們不會未經授權收集、使用或分享您的個人資料。</p>
+                        
+                        <h3>服務條款</h3>
+                        <p>使用本網站即表示您同意遵守我們的服務條款。我們保留隨時修改服務內容的權利，並會及時通知用戶重要變更。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- News Detail Modal -->
+    <div id="news-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title"></h2>
+                <button class="modal-close" id="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-meta">
+                    <span id="modal-source"></span>
+                    <span id="modal-date"></span>
+                </div>
+                <img id="modal-image" src="" alt="" style="display: none;">
+                <div id="modal-content-text"></div>
+                <div class="modal-actions">
+                    <button id="modal-share" class="action-btn">
+                        <i class="fas fa-share-alt"></i> 分享
+                    </button>
+                    <button id="modal-bookmark" class="action-btn">
+                        <i class="fas fa-bookmark"></i> 收藏
+                    </button>
+                    <span id="modal-source-link" class="action-btn">
+                        <i class="fas fa-external-link-alt"></i> 原文連結
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Footer section removed as requested -->
+
+    <!-- Supabase CDN -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    
+    <!-- Initialize Supabase and App -->
+    <script>
+        // 環境變數注入（在生產環境中由 Vercel 自動替換）
+        // 在開發環境中使用預設值
+        window.SUPABASE_URL = '{{ SUPABASE_URL }}' === '{{ SUPABASE_URL }}' ? 'https://your-project.supabase.co' : '{{ SUPABASE_URL }}';
+        window.SUPABASE_ANON_KEY = '{{ SUPABASE_ANON_KEY }}' === '{{ SUPABASE_ANON_KEY }}' ? 'your-anon-key' : '{{ SUPABASE_ANON_KEY }}';
+        window.NEXT_PUBLIC_SITE_URL = '{{ NEXT_PUBLIC_SITE_URL }}' === '{{ NEXT_PUBLIC_SITE_URL }}' ? 'http://localhost:8000' : '{{ NEXT_PUBLIC_SITE_URL }}';
+        window.NEXT_PUBLIC_APP_NAME = '{{ NEXT_PUBLIC_APP_NAME }}' === '{{ NEXT_PUBLIC_APP_NAME }}' ? 'Anime Streaming PWA' : '{{ NEXT_PUBLIC_APP_NAME }}';
+        
+        // Initialize Supabase when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Supabase client
+            if (typeof initializeSupabase === 'function') {
+                initializeSupabase();
+            }
+        });
+    </script>
+    
+    <!-- PWA Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

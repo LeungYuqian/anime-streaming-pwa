@@ -1,40 +1,26 @@
 {
-  "name": "anime-streaming-app",
+  "name": "anime-streaming-pwa",
   "version": "1.0.0",
-  "description": "A Progressive Web App for anime streaming with Supabase integration",
+  "description": "A Progressive Web App for anime streaming",
   "main": "index.html",
   "scripts": {
     "dev": "python -m http.server 8000",
-    "build": "node build.js",
     "start": "python -m http.server 8000",
-    "deploy": "npm run build && vercel --prod",
-    "preview": "vercel dev"
+    "build": "echo 'No build step required for static site'"
   },
   "keywords": [
     "anime",
     "streaming",
     "pwa",
-    "supabase",
-    "vercel"
+    "static"
   ],
-  "author": "Your Name",
+  "author": "LeungYuqian",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/anime-streaming-app.git"
+    "url": "https://github.com/LeungYuqian/anime-streaming-pwa.git"
   },
   "engines": {
-    "node": ">=14.0.0"
-  },
-  "devDependencies": {
-    "@vercel/static": "^3.0.0"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.39.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "node": ">=18.0.0"
+  }
 }
